@@ -1,0 +1,6 @@
+{
+    "appName": "pws2022",
+    "port": 5555,
+    "dbUrl": "<use your specific url>",
+    "dbName": "pws2022"
+}
