@@ -1,0 +1,6 @@
+{
+    "appName": "pws2022",
+    "port": 5555,
+    "dbUrl": "mongodb://127.0.0.1:27017",
+    "dbName": "dbtest"
+}

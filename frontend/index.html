@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="pws2022">
+    <head>
+        <title>pws2022</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+        <link rel="stylesheet" href="node_modules/bootstrap3/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="node_modules/animate.css/animate.min.css"></script>
+        <link rel="stylesheet" href="node_modules/angular-http-loading-interceptor/spinner.css">
+        <link rel="stylesheet" href="node_modules/angular-cog-alert/dist/angular-cog-alert.min.css">
+        <link rel="stylesheet" href="node_modules/ct-ui-select/dist/select.min.css">
+
+        <script src="node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="node_modules/bootstrap3/dist/js/bootstrap.min.js"></script>
+
+        <link rel="shortcut icon" href="img/favicon.png">
+        <link rel="stylesheet" href="css/index.css">
+    </head>
+    <body>
+        <div class="container" ng-controller="MainCtrl as ctrl">
+
+            <!-- xhr spinner -->
+            <div id="httpLoadingSpinner" http-loading-interceptor-spinner></div>
+
+            <!-- navigation bar -->
+            <nav class="navbar navbar-default navbar-fixed-top" role="navigation" ng-if="ctrl.loggedUser">
+                <div class="container-fluid">
+    
+                    <div class="navbar-header">
+    
+                        <button type="button" class="navbar-toggle" ng-click="ctrl.isCollapsed = !ctrl.isCollapsed">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+    
+                    </div>
+    
+                    <div class="navbar-collapse" ng-class="ctrl.isCollapsed ? 'collapse' : 'in'">
+    
+                        <!-- menu -->
+                        <ul class="nav navbar-nav">
+                            <li ng-repeat="menuPos in ctrl.menu" ng-class="ctrl.navClass(menuPos.route)">
+                                <a href="#{{menuPos.route}}" ng-bind-html="menuPos.title"></a>
+                            </li>
+                        </ul>
+
+                        <!-- login area -->
+                        <ul class="nav navbar-nav navbar-right">
+                            <form class="navbar-form">
+                                <div class="form-group" ng-if="!ctrl.loggedUser.username">
+                                    <input class="form-control" type="text" placeholder="email" ng-model="ctrl.creds.username"/>
+                                    <input class="form-control" type="password" placeholder="password" ng-model="ctrl.creds.password"/>
+                                    <button class="btn btn-default fa fa-sign-in" ng-click="ctrl.doLogin()" ng-disabled="!ctrl.creds.username"></button>
+                                </div>
+                                <div class="form-group" ng-if="ctrl.loggedUser.username">
+                                    <span class="label label-success" style="font-size: 1em;" ng-bind="ctrl.loggedUser.username"></span>
+                                    <button class="btn btn-default fa fa-sign-out" ng-click="ctrl.doLogout()"></button>
+                                </div>
+                            </form>
+                        </ul>    
+
+                    </div>    
+                </div>
+            </nav>
+
+            <!-- alerts -->
+            <cog-alerts></cog-alerts>
+
+            <!-- workplace -->
+            <div ng-view></div>
+
+        </div>
+        <script src="node_modules/angular/angular.min.js"></script>
+        <script src="node_modules/angular-route/angular-route.min.js"></script>
+        <script src="node_modules/angular-sanitize/angular-sanitize.min.js"></script>
+        <script src="node_modules/angular-animate/angular-animate.min.js"></script>
+        <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+        <script src="node_modules/angular-http-loading-interceptor/angular-http-loading-interceptor.js"></script>
+        <script src="node_modules/angular-cog-alert/dist/angular-cog-alert.min.js"></script>
+        <script src="node_modules/ct-ui-select/dist/select.min.js"></script>
+
+        <script src="js/app.js"></script>
+        <script src="js/HomeCtrl.js"></script>
+        <script src="js/PersonsCtrl.js"></script>
+        <script src="js/ProjectsCtrl.js"></script>
+        <script src="js/TasksCtrl.js"></script>
+        <script src="js/AllTasksCtrl.js"></script>
+    </body>
+</html>

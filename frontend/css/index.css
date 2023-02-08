@@ -1,0 +1,20 @@
+body {
+    margin-top: 5em;
+}
+
+.alert.ng-enter {
+    -webkit-animation: fadeInRight 0.5s;
+    animation: fadeInRight 0.5s;
+}
+
+.alert.ng-leave {
+    -webkit-animation: fadeOutRight 0.5s;
+    animation: fadeOutRight 0.5s
+}
+
+.alert-box {
+    width: 25%;
+    position: relative;
+    float: right;
+    background-color: transparent;
+}

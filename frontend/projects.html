@@ -1,0 +1,96 @@
+<h1>
+    Projects
+</h1>
+
+<div>
+    <form class="form-inline">
+        <span class="label label-primary" style="font-size: large;" ng-bind="ctrl.projectsCount"></span>
+        <span class="label label-success" style="font-size: large;" ng-bind="ctrl.projectsFiltered"></span>
+        <i class="fa fa-hashtag"></i>
+        <input style="width: 10%" class="form-control" type="number" ng-model="ctrl.limit" ng-change="ctrl.refresh()"/>
+        <i class="fa fa-search"></i>
+        <input style="width: 20%" class="form-control" type="text" ng-model="ctrl.filter" ng-change="ctrl.refresh()"/>
+    </form>
+</div>
+
+<br/><br/>
+
+<div>
+    <table class="table table-stripped">
+        <tr>
+            <th width="30%">name</th>
+            <th width="20%">manager</th>
+            <th width="40%">members</th>
+            <th width="10%">
+                <button class="btn btn-default fa fa-refresh" ng-click="ctrl.refresh(true)"></button>
+            </th>
+        </tr>
+        <tr ng-repeat="project in ctrl.projects">
+            <td>
+                <div ng-bind="project.name" ng-if="ctrl.editedRow!=$index"></div>
+                <input class="form-control" ng-model="ctrl.project.name" ng-if="ctrl.editedRow==$index"/>
+            </td>
+            <td>
+                <div ng-bind="ctrl.abbrevPerson(project.manager)" ng-if="ctrl.editedRow!=$index"></div>
+                <table ng-if="ctrl.editedRow==$index">
+                    <tr>
+                        <td width="100%">
+                            <ui-select ng-model="ctrl.project.manager" close-on-select="true">
+                                <ui-select-match>{{ctrl.abbrevPerson(ctrl.project.manager)}}</ui-select-match>
+                                <ui-select-choices repeat="person in (ctrl.persons | filter: $select.search) track by person._id">
+                                <div ng-bind="person.firstName+' '+person.lastName"></div>
+                                <small ng-bind="person.email"></small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </td>
+                        <td>
+                            <button class="btn btn-default fa fa-times" ng-click="ctrl.project.manager=null" ng-disabled="ctrl.project.manager==null" ng-if="ctrl.editedRow==$index"></button>    
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <div ng-bind="ctrl.abbrevPersons(project.members)" ng-if="ctrl.editedRow!=$index"></div>
+                <ui-select multiple ng-model="ctrl.project.members" close-on-select="true" ng-if="ctrl.editedRow==$index">
+                    <ui-select-match placeholder="...">{{$item.firstName.substring(0,1)+'.'+$item.lastName}}</ui-select-match>
+                    <ui-select-choices repeat="person in ctrl.persons | filter: $select.search">
+                      <div ng-bind="person.firstName+' '+person.lastName"></div>
+                      <small ng-bind="person.email"></small>
+                    </ui-select-choices>
+                </ui-select>    
+            </td>
+            <td nowrap>
+                <button class="btn btn-success fa fa-edit" ng-click="ctrl.edit($index)" ng-disabled="ctrl.editedRow>=0" ng-if="ctrl.editedRow!=$index"></button>
+                <button class="btn btn-success fa fa-check" ng-click="ctrl.confirm(project._id)" ng-if="ctrl.editedRow==$index"></button>
+                <button class="btn btn-danger fa fa-trash" ng-click="ctrl.delete($index)" ng-disabled="ctrl.editedRow>=0" ng-if="ctrl.editedRow!=$index"></button>
+                <button class="btn btn-danger fa fa-times" ng-click="ctrl.editedRow=-1" ng-if="ctrl.editedRow==$index"></button> 
+            </td>
+        </tr>
+        <tr>
+            <td><input type="text" class="form-control" placeholder="name" ng-model="ctrl.project.name" ng-if="ctrl.editedRow==ctrl.projects.length"/></td>
+            <td>
+                <ui-select ng-model="ctrl.project.manager" close-on-select="true" ng-if="ctrl.editedRow==ctrl.projects.length">
+                    <ui-select-match>{{ctrl.abbrevPerson(ctrl.project.manager)}}</ui-select-match>
+                    <ui-select-choices repeat="person in (ctrl.persons | filter: $select.search) track by person._id">
+                      <div ng-bind="person.firstName+' '+person.lastName"></div>
+                      <small ng-bind="person.email"></small>
+                    </ui-select-choices>
+                </ui-select>    
+            </td>
+            <td>
+                <ui-select multiple ng-model="ctrl.project.members" close-on-select="true" ng-if="ctrl.editedRow==ctrl.projects.length">
+                    <ui-select-match placeholder="...">{{$item.firstName.substring(0,1)+'.'+$item.lastName}}</ui-select-match>
+                    <ui-select-choices repeat="person in ctrl.persons | filter: $select.search">
+                      <div ng-bind="person.firstName+' '+person.lastName"></div>
+                      <small ng-bind="person.email"></small>
+                    </ui-select-choices>
+                </ui-select>    
+            </td>
+            <td nowrap>
+                <button class="btn btn-primary fa fa-plus" ng-if="ctrl.editedRow!=ctrl.projects.length" ng-disabled="ctrl.editedRow!=-1" ng-click="ctrl.prepareToAdd()"></button>
+                <button class="btn btn-success fa fa-plus" ng-if="ctrl.editedRow==ctrl.projects.length" ng-click="ctrl.add()"></button>
+                <button class="btn btn-danger fa fa-times" ng-if="ctrl.editedRow==ctrl.projects.length" ng-click="ctrl.editedRow=-1"></button> 
+            </td>
+        </tr>
+    </table>
+</div>

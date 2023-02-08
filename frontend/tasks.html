@@ -1,0 +1,32 @@
+<h1>
+    Tasks
+</h1>
+
+<div style="float: right;">
+    <form class="form-inline">
+        <select class="form-control" ng-model="ctrl.task.project" ng-change="ctrl.loadTasks()">
+            <option ng-repeat="project in ctrl.projects" ng-bind="project.name" ng-value="project._id"></option>
+        </select>
+    </form>
+</div>
+
+<table class="table table-stripped">
+    <tr>
+        <th>Name</th><th>Creator</th><th>Creation time</th><th>Action</th>
+    </tr>
+    <tr ng-repeat="task in ctrl.tasks">
+        <td ng-bind="task.name"></td><td ng-bind="task.creator"></td><td ng-bind="task.creationTime | date:'yyyy-MM-dd HH:mm:ss Z'"></td>
+        <td nowrap>
+            <span ng-if="task.responsible != ctrl.user_id && !task.done" class="label label-primary" style="font-size: 1em;" ng-bind="task.responsible"></span>
+            <button class="btn btn-success fa fa-check" ng-if="task.responsible == ctrl.user_id && !task.done" ng-click="ctrl.done(task._id)"></button>
+            <button class="btn btn-primary" title="Take over" ng-if="!task.responsible" ng-click="ctrl.takeOver(task._id)">Take over</button>
+            
+            <span ng-if="task.done" class="label label-success" style="font-size: 1em;" ng-bind="task.done | date:'yyyy-MM-dd HH:mm:ss Z'"></span>
+        </td>
+    </tr>
+</table>
+
+<form class="form-inline">
+    <input class="form-control" type="text" placeholder="name of the task" ng-model="ctrl.task.name"/>
+    <button class="btn btn-primary fa fa-plus" ng-click="ctrl.addTask()"></button>
+</form>

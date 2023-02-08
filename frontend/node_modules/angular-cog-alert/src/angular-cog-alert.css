@@ -1,0 +1,7 @@
+.alert-box {
+    width: 300px;
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    background-color:transparent;
+}

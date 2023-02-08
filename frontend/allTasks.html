@@ -1,0 +1,43 @@
+<h1>
+    All Tasks
+</h1>
+
+<div>
+    <form class="form-inline">
+        <i class="fa fa-search"></i>
+        <input style="width: 20%" class="form-control" type="text" ng-model="ctrl.taskName" ng-change="ctrl.loadAllTasks()"/>
+    </form>
+</div>
+<div style="float: right;">
+    <form class="form-inline">
+        <select class="form-control" ng-model="ctrl.task.status" ng-change="ctrl.loadAllTasks()">
+            <option value="" selected>All Task</option>
+            <option value="available">Available</option>
+            <option value="in progress">Pending</option>
+            <option value="done">Taken</option>
+        </select>
+    </form>
+</div>
+<div style="float: right;">
+    <form class="form-inline">
+        <select class="form-control" ng-model="ctrl.task.project" ng-change="ctrl.loadAllTasks()">
+            <option ng-value="" selected>All Task</option>
+            <option ng-repeat="project in ctrl.projects" ng-bind="project.name" ng-value="project._id"></option>
+        </select>
+    </form>
+</div>
+<table class="table table-stripped">
+    <tr>
+        <th>Name</th><th>Creator</th><th>Creation time</th><th>Status</th><!--<th>Action</th>--->
+    </tr>
+    
+    <tr ng-repeat="task in ctrl.tasks">
+        <td ng-bind="task.name"></td><td ng-bind="task.creator"></td><td ng-bind="task.creationTime | date:'yyyy-MM-dd HH:mm:ss Z'"></td>
+        <td nowrap>
+            <span ng-if="!task.responsible">Available</span>
+            <span ng-if="task.responsible && !task.done">Pending</span>
+            <span ng-if="task.responsible && task.done">Taken</span>
+        </td>
+        
+    </tr>
+</table>
