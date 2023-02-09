@@ -12,9 +12,9 @@
     <form class="form-inline">
         <select class="form-control" ng-model="ctrl.task.status" ng-change="ctrl.loadAllTasks()">
             <option value="" selected>All Task</option>
-            <option value="available">Available</option>
-            <option value="in progress">Pending</option>
-            <option value="done">Taken</option>
+            <option value="free">Free</option>
+            <option value="in progress">In progress</option>
+            <option value="done">Done</option>
         </select>
     </form>
 </div>
@@ -34,9 +34,9 @@
     <tr ng-repeat="task in ctrl.tasks">
         <td ng-bind="task.name"></td><td ng-bind="task.creator"></td><td ng-bind="task.creationTime | date:'yyyy-MM-dd HH:mm:ss Z'"></td>
         <td nowrap>
-            <span ng-if="!task.responsible">Available</span>
-            <span ng-if="task.responsible && !task.done">Pending</span>
-            <span ng-if="task.responsible && task.done">Taken</span>
+            <span ng-if="!task.responsible">Free</span>
+            <span ng-if="task.responsible && !task.done">In Progress</span>
+            <span ng-if="task.responsible && task.done">Done</span>
         </td>
         
     </tr>

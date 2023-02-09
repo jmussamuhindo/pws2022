@@ -9,7 +9,7 @@ app.controller('AllTasksCtrl', [ '$http', 'common',function($http, common) {
         name: '',
         creator: null,
         project: null,
-        status: "available",
+        status: "free",
         creationTime: Date.now(),
         category: "1"
     }
