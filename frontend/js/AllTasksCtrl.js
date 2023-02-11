@@ -1,5 +1,5 @@
 app.controller('AllTasksCtrl', [ '$http', 'common',function($http, common) {
-    console.log('AllTasksCtrl started')
+    console.log('AllTasksCtrl started');
     let ctrl = this
     ctrl.tasks = []
     ctrl.projects = []
