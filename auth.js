@@ -42,4 +42,5 @@ const auth = module.exports = {
     errorHandler: (err, req, res, nextTick) => {
         res.json({ error: err.message })
     }
+    
 }
