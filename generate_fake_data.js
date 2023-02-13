@@ -53,10 +53,10 @@ const generatePersons = (amount, nextTick) => {
 
 db.init(config, () => {
 
-    generatePersons(99, (persons) => {
+    generatePersons(9, (persons) => {
         persons.unshift({
-            firstName: 'Admin',
-            lastName: 'Istrator',
+            firstName: 'Mussa',
+            lastName: 'Justin',
             yearOfBirth: 2022,
             email: 'admin',
             password: 'admin'
